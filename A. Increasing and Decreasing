@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    vector<vector<int>> v(t); // Resize the outer vector to have size 't'
+    
+    for (int i = 0; i < t; i++) {
+        int x, y, n;
+        cin >> x >> y >> n;
+        int interval = y - x;
+        n = n - 1;
+        stack<int> s;
+        if (interval < (n * (n + 1) / 2)) {
+            v[i].push_back(-1);
+            continue;
+        } else {
+            s.push(y);
+            int count = 1;
+            int temp = y;
+            for (int i = 0; i < n - 1; i++) {
+                s.push(temp - count);
+                temp = temp - count;
+                count++;
+            }
+            v[i].push_back(x);
+            while (!s.empty()) {
+                v[i].push_back(s.top());
+                s.pop();
+            }
+        }
+    }
+    
+    for (int i = 0; i < t; i++) {
+        for (int j = 0; j < v[i].size(); j++) {
+            cout << v[i][j] << " ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}
+
